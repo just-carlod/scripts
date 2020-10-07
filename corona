@@ -22,5 +22,5 @@ case "$1" in
 	-a ) [ "$(date '+%H')" -eq "$(sed -n 1p ~/.cache/covid-19)" ] && list || check && list ;;
 	-h ) man ;;
 	-c ) check && exit ;;
-	"$NULL" ) [ "$(date '+%H')" -eq "$(sed -n 1p ~/.cache/covid-19)" ] && short && exit || check && update && exit ;;
+	"$NULL" ) [ "$(date '+%H')" -eq "$(sed -n 1p ~/.cache/covid-19)" ] && short && exit || check  && exit ;;
 esac
