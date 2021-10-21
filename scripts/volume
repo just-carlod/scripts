@@ -1,0 +1,41 @@
+#! /bin/bash
+
+NUM="${2:-5}"
+vol="$(pulsemixer --get-volume)"
+tvol="${vol%% *}"
+
+vol() {
+	[ $(pulsemixer --get-mute) == 1 ]  && speaker="🔇" || speaker="🔉"
+	echo "$speaker $tvol" && exit
+}
+simplevol() {
+	[ $(pulsemixer --get-mute) == 1 ]  && speaker="muted|" || speaker=""
+	echo "$speaker $tvol" && exit
+}
+change_vol() {
+	pulsemixer --"$opt"-volume "$NUM" && exit
+}
+mute() {
+	[ $(pulsemixer --get-mute) == 1 ] && pulsemixer --unmute || pulsemixer --mute
+}
+man() {
+	printf " Usage:\tVolume + [command] + optional [argument]
+	<NUM> or add <NUM>\t to adjust the volume
+	-h\t\t help
+	-t\t\t no emoji
+	-m\t\t mute sound
+	<NUM> or set <NUM>\t set volume"
+}
+
+case "$1" in
+	"$NULL") vol ;;
+	-h) man ;;
+	--help) man ;;
+	-m) mute ;;
+	-t) simplevol ;;
+	add) opt="change"; change_vol ;;
+	set) opt="set"; change_vol ;;
+	''|*[0-9]*) opt="set"; NUM=$1 change_vol ;;
+	+ ) opt="change"; NUM="+$NUM"; change_vol ;;
+	- ) opt="change"; NUM="-$NUM"; change_vol ;;
+esac

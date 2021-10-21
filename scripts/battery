@@ -1,0 +1,26 @@
+#! /bin/bash
+
+battery_level="$(cat /sys/class/power_supply/BAT0/capacity)"
+battery_health="$(cat /sys/class/power_supply/BAT0/capacity_level)"
+battery_stage="$(cat /sys/class/power_supply/BAT0/status)"
+cycle_count="$(cat /sys/class/power_supply/BAT0/cycle_count)"
+
+battery_noemoji() {
+	basic && echo "BAT: $battery_level% "
+}
+battery_basic() {
+	basic && echo "$batsym$battery_level% "
+}
+basic() {
+	[ "$battery_stage" == "Discharging" ] && batsym="🔋" || batsym="🔌"
+}
+battery_detail() {
+	basic
+	printf "battery_level: $battery_level  $batsym \ncycle_count:$cycle_count\nhealth: $battery_health\n"
+}
+case "$1" in
+	-all ) battery_detail ;;
+	-a ) battery_detail ;;
+	"$NULL" ) battery_basic ;;
+	-t ) battery_noemoji ;;
+esac
