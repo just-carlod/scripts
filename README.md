@@ -12,5 +12,3 @@
 
 ### Also make sure to add $HOME/.local/bin to your $PATH in your ~/.bashrc or ~/.zshrc
 
-> type it in your terminal `export PATH=$PATH:$HOME/.local/bin` and try again
-
