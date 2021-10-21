@@ -1,4 +1,0 @@
-#! /bin/sh
-# show Local IP.
-device="your-wifi-card" #type "ip a show" to find it
-ip a show "$device" | grep -Eo '(inet)?*([0-9]*\.){3}[0-9]*' | grep -v '**\.255'

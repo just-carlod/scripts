@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo " $(brightcontrol) $(volume) $(battery) $(date +'%Y-%m-%d %T %p')"
